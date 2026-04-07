@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SMS FUCKER BY MR.QURESHI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --cyber-green: #00ff41;
+            --cyber-red: #ff004f;
+            --cyber-yellow: #ffcc00;
+            --cyber-blue: #00d4ff;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* --- BACKGROUND CYBER ANIMATIONS --- */
+        .cyber-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+
+        /* Rotating Rings */
+        .ring {
+            position: absolute; border: 2px solid rgba(0, 255, 65, 0.1);
+            border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+        }
+        .ring-1 { width: 300px; height: 300px; border-top-color: var(--cyber-red); }
+        .ring-2 { width: 500px; height: 500px; border-bottom-color: var(--cyber-yellow); animation-duration: 30s; animation-direction: reverse; }
+        
+        /* Moving Rays */
+        .ray {
+            position: absolute; width: 2px; height: 100vh;
+            background: linear-gradient(to bottom, transparent, var(--cyber-green), transparent);
+            opacity: 0.3; animation: ray-move 5s linear infinite;
+        }
+
+        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes ray-move { from { transform: translateY(-100vh); } to { transform: translateY(100vh); } }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            width: 100%; max-width: 450px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--cyber-green);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2), inset 0 0 15px rgba(0, 255, 65, 0.1);
+            position: relative; z-index: 10;
+        }
+
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { font-size: 1.4rem; color: var(--cyber-green); text-shadow: 0 0 10px var(--cyber-green); }
+
+        /* --- INPUTS & CONTROLS --- */
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.7rem; color: var(--cyber-yellow); margin-bottom: 8px; letter-spacing: 2px; }
+        
+        input {
+            width: 100%; background: #000; border: 1px solid #333;
+            border-radius: 5px; padding: 12px; color: var(--cyber-green);
+            font-family: var(--font-mono); font-size: 1rem; transition: 0.3s;
+        }
+        input:focus { border-color: var(--cyber-green); outline: none; box-shadow: 0 0 10px var(--cyber-green); }
+
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .btn-grid label { background: #111; border: 1px solid #333; padding: 10px; text-align: center; border-radius: 5px; cursor: pointer; color: #888; transition: 0.2s; }
+        .btn-grid input { display: none; }
+        .btn-grid input:checked + label { background: var(--cyber-green); color: #000; border-color: var(--cyber-green); font-weight: bold; }
+
+        #trigger-btn {
+            width: 100%; padding: 15px; border-radius: 5px; border: none;
+            background: var(--cyber-red); color: white; font-weight: bold;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 79, 0.4);
+        }
+        #trigger-btn:hover { transform: scale(1.02); filter: brightness(1.2); }
+        #trigger-btn.active { background: var(--cyber-yellow); color: #000; }
+
+        /* --- LIVE TERMINAL --- */
+        .terminal {
+            margin-top: 20px; background: #000; border: 1px solid #222;
+            height: 180px; border-radius: 5px; padding: 10px;
+            overflow-y: auto; font-family: var(--font-mono); font-size: 0.75rem;
+            color: var(--cyber-green); position: relative;
+        }
+        .terminal::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,0.1) 1px, transparent 2px); pointer-events: none; }
+        
+        .term-entry { margin-bottom: 4px; border-left: 2px solid var(--cyber-green); padding-left: 8px; animation: burst 0.5s ease-out; }
+        .term-yellow { color: var(--cyber-yellow); border-color: var(--cyber-yellow); }
+        .term-red { color: var(--cyber-red); border-color: var(--cyber-red); }
+
+        @keyframes burst { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- SOCIALS & FOOTER --- */
+        .socials { display: flex; gap: 10px; width: 100%; max-width: 450px; margin: 15px 0; }
+        .social-link { flex: 1; text-align: center; padding: 12px; border-radius: 5px; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
+        .link-wa { background: #25D366; color: white; }
+        .link-web { border: 1px solid var(--cyber-blue); color: var(--cyber-blue); }
+
+        .footer { margin-top: 20px; text-align: center; }
+        .owner-name { font-weight: bold; color: white; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="cyber-bg">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ray" style="left: 20%; animation-delay: 0s;"></div>
+        <div class="ray" style="left: 50%; animation-delay: 2s;"></div>
+        <div class="ray" style="left: 80%; animation-delay: 1s;"></div>
+    </div>
+
+    <div class="socials">
+        <a href="https://whatsapp.com/channel/0029VaIo7rJDZ4LZEbTJXi1U" class="social-link link-wa">WHATSAPP</a>
+        <a href="https://whatsapp.com/channel/0029VaIo7rJDZ4LZEbTJXi1U" class="social-link link-web">WEBSITE</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>APNI AWAAM SMS</h1>
+        </div>
+
+        <div class="input-group">
+            <label>TARGET_NODE_ADDR</label>
+            <input type="tel" id="target-num" placeholder="0332... / 92332...">
+        </div>
+
+        <div class="input-group">
+            <label>PACKET_INTENSITY</label>
+            <div class="btn-grid">
+                <input type="radio" id="p1" name="amt" value="10" checked><label for="p1">10 Packets</label>
+                <input type="radio" id="p2" name="amt" value="25"><label for="p2">25 Packets</label>
+                <input type="radio" id="p3" name="amt" value="50"><label for="p3">50 Packets</label>
+                <input type="radio" id="p4" name="amt" value="manual"><label for="p4">Override</label>
+            </div>
+        </div>
+
+        <button id="trigger-btn">Initialize Broadcast</button>
+
+        <div class="terminal" id="term-box">
+            <div class="term-entry">STATUS: System Online. Awaiting target...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="color: #666; font-size: 0.7rem; margin-bottom: 5px;">PROTOCOL_DEVELOPER</p>
+        <p class="owner-name">MR.QURESHI</p>
+    </div>
+
+    <script>
+        const DOM = {
+            num: document.getElementById('target-num'),
+            btn: document.getElementById('trigger-btn'),
+            term: document.getElementById('term-box')
+        };
+
+        let active = false;
+
+        function addTerm(msg, type = '') {
+            const time = new Date().toLocaleTimeString().split(' ')[0];
+            const div = document.createElement('div');
+            div.className = `term-entry ${type}`;
+            div.innerHTML = `<span style="color:#555">[${time}]</span> ${msg}`;
+            DOM.term.appendChild(div);
+            DOM.term.scrollTop = DOM.term.scrollHeight;
+        }
+
+        function cleanNum(num) {
+            let c = num.replace(/\D/g, '');
+            if (c.startsWith('0') && c.length === 11) return '92' + c.substring(1);
+            if (c.startsWith('3') && c.length === 10) return '92' + c;
+            return (c.length === 12 && c.startsWith('92')) ? c : null;
+        }
+
+        async function launch() {
+            const target = cleanNum(DOM.num.value);
+            const amt = document.querySelector('input[name="amt"]:checked').value;
+            const count = amt === 'manual' ? 100 : parseInt(amt);
+
+            if (!target) {
+                addTerm("ERR_INVALID_TARGET: Address format failed.", "term-red");
+                return;
+            }
+
+            active = true;
+            DOM.btn.textContent = "ABORT_SEQUENCE";
+            DOM.btn.classList.add('active');
+            DOM.term.innerHTML = '';
+            
+            addTerm(`HANDSHAKE: Target ${target} verified.`);
+            addTerm(`STREAM_START: Dispatching ${count} encrypted packets...`, "term-yellow");
+
+            try {
+                // Connecting to your Cloudflare API
+                const response = await fetch("https://sms-bmb-api.fakcloud.tech/", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number: target, count: count })
+                });
+
+                const data = await response.json();
+
+                // Live Terminal simulation logic
+                for(let i=1; i<=3; i++) {
+                    addTerm(`TX_BUFFER_${i}: Sending Hex Chunk 0x${Math.random().toString(16).substr(2, 8)}`);
+                }
+
+                if (data.Status === "Success") {
+                    addTerm(`SUCCESS: ${data.Message}`, "term-green");
+                } else {
+                    addTerm(`REJECTED: ${data.Message}`, "term-red");
+                }
+
+            } catch (err) {
+                addTerm("CRITICAL_FAILURE: Connection lost to Matrix server.", "term-red");
+            } finally {
+                active = false;
+                DOM.btn.textContent = "Initialize Broadcast";
+                DOM.btn.classList.remove('active');
+            }
+        }
+
+        DOM.btn.addEventListener('click', () => {
+            if (!active) launch();
+            else location.reload(); // Quick abort
+        });
+    </script>
+</body>
+</html>
